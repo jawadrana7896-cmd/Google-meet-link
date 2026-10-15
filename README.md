@@ -1,1 +1,92 @@
 # Google-meet-link
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Google Meet</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #101722;
+      color: white;
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .box {
+      max-width: 400px;
+      margin: auto;
+      padding: 25px;
+      background: #1c2738;
+      border-radius: 16px;
+    }
+
+    button {
+      padding: 14px;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      background: #3478f6;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #status {
+      margin-top: 18px;
+      color: #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h1>Google Meet</h1>
+
+    <p>
+      Google Meet shuru karne ke liye
+      apne camera ki permission Allow karein.
+    </p>
+
+    <button id="start">Allow Camera</button>
+
+    <p id="status">
+      Camera permission ka intezar hai.
+    </p>
+  </div>
+
+  <script>
+    const start = document.getElementById("start");
+    const status = document.getElementById("status");
+    let stream = null;
+
+    start.onclick = async () => {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: false
+        });
+
+        status.textContent =
+          "Camera permission mil gayi. Aap ab Google Meet khol sakte hain.";
+
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+
+        start.textContent = "Open Google Meet";
+        start.onclick = () => {
+          window.location.href = "https://meet.google.com/";
+        };
+
+      } catch (error) {
+        status.textContent =
+          "Camera permission nahi mili. Browser settings mein camera Allow karein.";
+      }
+    };
+  </script>
+
+</body>
+</html>
+```
